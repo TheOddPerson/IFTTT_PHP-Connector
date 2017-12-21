@@ -7,7 +7,7 @@
 **/
 
 $home_hostname = ""; //set this to your home IP or dynamic hostname
-$mpc-hc_port = 13579 //MediaPlayerClassic Web remote port - Make sure to foward this in your router
+$mpc_port = 13579 //MediaPlayerClassic Web remote port - Make sure to foward this in your router
 
 
 
