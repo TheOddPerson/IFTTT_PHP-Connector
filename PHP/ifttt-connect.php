@@ -7,44 +7,44 @@
 
 require (config.php); //personal settings saved here. 
 
-if (isset($_POST['verb']) and isset($_POST['action']) {
+if (isset($_POST['verb']) and isset($_POST['action'])) {
 	switch ($_POST['action']) {
 		case 'mpc': //Media player classic home cinema - web interface
 			switch ($_POST['verb']) {
 				case 'playpause':
-					$data = array('wm_command' => '889')
+					$data = array('wm_command' => '889');
 					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);				
 					break;
 				case 'skipback': 
-					$data = array('wm_command' => '901')
+					$data = array('wm_command' => '901');
 					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
 					break;
 				case 'skipfwd': 
-					$data = array('wm_command' => '902')
+					$data = array('wm_command' => '902');
 					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
 					break;
 				case 'next': 
-					$data = array('wm_command' => '922')
+					$data = array('wm_command' => '922');
 					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
 					break;
 				case 'prev': 
-					$data = array('wm_command' => '921')
+					$data = array('wm_command' => '921');
 					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
 					break;
 				case 'voldown': 
-					$data = array('wm_command' => '908')
+					$data = array('wm_command' => '908');
 					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
 					break;
 				case 'volup': 
-					$data = array('wm_command' => '907')
+					$data = array('wm_command' => '907');
 					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
 					break;
 				case 'subs': 
-					$data = array('wm_command' => '959')
+					$data = array('wm_command' => '959');
 					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
 					break;
 				case 'audio': 
-					$data = array('wm_command' => '957')
+					$data = array('wm_command' => '957');
 					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
 					break;
 			}
