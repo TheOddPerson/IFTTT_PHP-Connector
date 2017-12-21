@@ -5,76 +5,67 @@
 	Author: Nick Bolhuis
 **/
 
-require (config.php); //personal settings saved here. 
+require ('config.php'); //personal settings saved here. 
+
+echo 'Script Begin';
 
 if (isset($_POST['verb']) and isset($_POST['action'])) {
 	switch ($_POST['action']) {
 		case 'mpc': //Media player classic home cinema - web interface
+			$mpc_url = "http://" . $home_hostname . ":" . $mpc_port . "/command.html";			
 			switch ($_POST['verb']) {
-				case 'playpause':
-					$data = array('wm_command' => '889');
-					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);				
+				case 'playpause':									
+					$data = 'wm_command=889';
 					break;
 				case 'skipback': 
-					$data = array('wm_command' => '901');
-					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
+					$data = 'wm_command=901';
 					break;
 				case 'skipfwd': 
-					$data = array('wm_command' => '902');
-					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
+					$data = 'wm_command=902';
 					break;
 				case 'next': 
-					$data = array('wm_command' => '922');
-					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
+					$data = 'wm_command=922';
 					break;
 				case 'prev': 
-					$data = array('wm_command' => '921');
-					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
+					$data = 'wm_command=921';
 					break;
 				case 'voldown': 
-					$data = array('wm_command' => '908');
-					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
+					$data = 'wm_command=908';
 					break;
 				case 'volup': 
-					$data = array('wm_command' => '907');
-					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
+					$data = 'wm_command=907';
 					break;
 				case 'subs': 
-					$data = array('wm_command' => '959');
-					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
+					$data = 'wm_command=959';
 					break;
 				case 'audio': 
-					$data = array('wm_command' => '957');
-					postRequest("http://" . $home_hostname . ":" . $mpc-hc_port . "/command.html", $data);
+					$data = 'wm_command=957';
 					break;
 			}
-			break;
+			postRequest($mpc_url, $data);
+			break; //end action case 'mpc'
 		
 	}
+} else {
+	echo 'no options set';
 }
 
-
-
-
-function postRequest($url, $data) {
-	// Thanks to dbau of Stack-Exchange
-	//https://stackoverflow.com/questions/5647461/how-do-i-send-a-post-request-with-php
-	//example:
-	//  $url = 'http://server.com/path';
-	//  $data = array('key1' => 'value1', 'key2' => 'value2');
-	//use key 'http' even if you send the request to https://...
-	$options = array(
-		'http' => array(
-			'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-			'method'  => 'POST',
-			'content' => http_build_query($data)
-		)
-	);
-	$context  = stream_context_create($options);
-	$result = file_get_contents($url, false, $context);
-	if ($result === FALSE) { /* Handle error */ }
-
-	var_dump($result);
+function postRequest($URL, $fieldString){ //Initiate Curl request and send back the result
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_setopt($ch, CURLOPT_URL, $URL);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fieldString);
+        $resulta = curl_exec ($ch);
+        if (curl_errno($ch)) {
+                print curl_error($ch);
+        } else {
+        curl_close($ch);
+        }
+        return $resulta;
 }
 
 ?>
